@@ -7,237 +7,141 @@
 <link href="https://fonts.googleapis.com/css2?family=Noto+Serif+TC:wght@400;600;700&family=Noto+Sans+TC:wght@300;400;500&display=swap" rel="stylesheet">
 <style>
   :root {
-    --bg: #0d0a06;
-    --bg2: #14100a;
-    --bg3: #1c1610;
-    --border: #2e2418;
-    --border2: #3a2e22;
-    --gold: #c8a862;
-    --gold2: #b8965a;
-    --text: #e8d5b0;
-    --text2: #a89070;
-    --text3: #6b5a45;
-    --text4: #4a3c2a;
-    --red: #c0392b;
-    --orange: #e67e22;
-    --green: #3d8c5e;
-    --radius: 12px;
-    --radius-sm: 8px;
-    --radius-pill: 22px;
+    --bg:#0d0a06;--bg2:#14100a;--bg3:#1c1610;
+    --border:#2e2418;--border2:#3a2e22;
+    --gold:#c8a862;--gold2:#b8965a;
+    --text:#e8d5b0;--text2:#a89070;--text3:#6b5a45;--text4:#4a3c2a;
+    --green:#3d8c5e;--orange:#e67e22;--red:#c0392b;
+    --radius:12px;--radius-sm:8px;--radius-pill:22px;
   }
+  *{box-sizing:border-box;margin:0;padding:0;}
+  body{background:var(--bg);color:var(--text);font-family:'Noto Sans TC',sans-serif;min-height:100vh;max-width:520px;margin:0 auto;}
 
-  * { box-sizing: border-box; margin: 0; padding: 0; }
-
-  body {
-    background: var(--bg);
-    color: var(--text);
-    font-family: 'Noto Sans TC', sans-serif;
-    min-height: 100vh;
-    max-width: 520px;
-    margin: 0 auto;
-  }
+  /* ── Storage Notice ── */
+  .notice{background:linear-gradient(135deg,#0b1a10,#091410);border-bottom:1px solid #1c3a28;padding:14px 44px 14px 20px;position:relative;}
+  .notice-title{font-size:11px;letter-spacing:1.5px;color:#4d9968;text-transform:uppercase;margin-bottom:6px;}
+  .notice-body{font-size:12px;color:#5a8a70;line-height:1.75;}
+  .notice-body strong{color:#7bc99a;}
+  .notice-body .warn{color:#3d7050;margin-top:5px;display:block;}
+  .notice-close{position:absolute;top:10px;right:14px;background:none;border:none;color:#3d6650;font-size:17px;cursor:pointer;padding:2px 6px;line-height:1;}
 
   /* ── Header ── */
-  .header {
-    position: sticky; top: 0; z-index: 100;
-    background: rgba(13,10,6,0.94);
-    backdrop-filter: blur(10px);
-    border-bottom: 1px solid var(--border);
-    padding: 16px 20px;
-    display: flex; justify-content: space-between; align-items: center;
-  }
-  .header-title { font-family: 'Noto Serif TC', serif; font-size: 17px; color: var(--gold); letter-spacing: 2px; }
-  .header-sub { font-size: 10px; color: var(--text3); letter-spacing: 1px; margin-top: 3px; }
+  .header{position:sticky;top:0;z-index:100;background:rgba(13,10,6,0.95);backdrop-filter:blur(10px);border-bottom:1px solid var(--border);padding:14px 20px;display:flex;justify-content:space-between;align-items:center;}
+  .header-title{font-family:'Noto Serif TC',serif;font-size:17px;color:var(--gold);letter-spacing:2px;}
+  .header-sub{font-size:10px;color:var(--text3);letter-spacing:1px;margin-top:3px;}
+  .edit-mode-pill{background:var(--orange);color:#fff;border-radius:var(--radius-pill);padding:3px 11px;font-size:11px;font-weight:700;letter-spacing:1px;display:none;}
 
   /* ── Tab Bar ── */
-  .tab-bar {
-    display: flex; border-bottom: 1px solid var(--border);
-    background: var(--bg2);
-    position: sticky; top: 65px; z-index: 99;
-  }
-  .tab {
-    flex: 1; padding: 12px; text-align: center;
-    font-size: 13px; color: var(--text3); cursor: pointer;
-    border-bottom: 2px solid transparent;
-    transition: all 0.2s; letter-spacing: 1px;
-    background: none; border-top: none; border-left: none; border-right: none;
-    font-family: inherit;
-  }
-  .tab.active { color: var(--gold); border-bottom-color: var(--gold); }
+  .tab-bar{display:flex;border-bottom:1px solid var(--border);background:var(--bg2);position:sticky;top:57px;z-index:99;}
+  .tab{flex:1;padding:11px 4px;text-align:center;font-size:11px;color:var(--text3);cursor:pointer;border-bottom:2px solid transparent;transition:all 0.2s;letter-spacing:0.3px;background:none;border-top:none;border-left:none;border-right:none;font-family:inherit;}
+  .tab.active{color:var(--gold);border-bottom-color:var(--gold);}
 
-  /* ── Page Sections ── */
-  .page { display: none; padding: 20px; padding-bottom: 40px; }
-  .page.active { display: block; }
+  /* ── Pages ── */
+  .page{display:none;padding:20px;padding-bottom:50px;}
+  .page.active{display:block;}
 
-  /* ── Section Divider ── */
-  .divider {
-    display: flex; align-items: center; gap: 10px;
-    font-size: 11px; color: var(--text3); letter-spacing: 2px;
-    text-transform: uppercase; margin: 22px 0 14px;
-  }
-  .divider::before, .divider::after {
-    content: ''; flex: 1; height: 1px; background: var(--border);
-  }
-  .divider:first-child { margin-top: 4px; }
+  /* ── Divider ── */
+  .divider{display:flex;align-items:center;gap:10px;font-size:11px;color:var(--text3);letter-spacing:2px;text-transform:uppercase;margin:22px 0 14px;}
+  .divider::before,.divider::after{content:'';flex:1;height:1px;background:var(--border);}
+  .divider:first-child{margin-top:4px;}
 
-  /* ── Labels & Inputs ── */
-  label { display: block; font-size: 12px; color: var(--text2); margin-bottom: 8px; letter-spacing: 0.5px; }
-  
-  input[type=text], textarea {
-    width: 100%; background: var(--bg3); border: 1px solid var(--border2);
-    border-radius: var(--radius-sm); padding: 11px 14px;
-    color: var(--text); font-size: 14px; font-family: inherit;
-    outline: none; resize: vertical; line-height: 1.7;
-    transition: border-color 0.2s;
-  }
-  input[type=text]:focus, textarea:focus { border-color: var(--gold2); }
-  input[type=text]::placeholder, textarea::placeholder { color: var(--text4); }
-  textarea { min-height: 80px; }
+  /* ── Inputs ── */
+  label{display:block;font-size:12px;color:var(--text2);margin-bottom:8px;letter-spacing:0.5px;}
+  input[type=text],textarea{width:100%;background:var(--bg3);border:1px solid var(--border2);border-radius:var(--radius-sm);padding:11px 14px;color:var(--text);font-size:14px;font-family:inherit;outline:none;resize:vertical;line-height:1.7;transition:border-color 0.2s;}
+  input[type=text]:focus,textarea:focus{border-color:var(--gold2);}
+  input[type=text]::placeholder,textarea::placeholder{color:var(--text4);}
+  textarea{min-height:80px;}
 
   /* ── Tags ── */
-  .tag-group { display: flex; flex-wrap: wrap; gap: 7px; }
-  .tag {
-    padding: 5px 13px; border-radius: var(--radius-pill);
-    font-size: 13px; border: 1px solid var(--border2);
-    background: transparent; color: var(--text2);
-    cursor: pointer; transition: all 0.2s; font-family: inherit;
-  }
-  .tag.selected { background: var(--gold2); color: #1a1208; border-color: transparent; font-weight: 600; }
+  .tag-group{display:flex;flex-wrap:wrap;gap:7px;}
+  .tag{padding:5px 13px;border-radius:var(--radius-pill);font-size:13px;border:1px solid var(--border2);background:transparent;color:var(--text2);cursor:pointer;transition:all 0.2s;font-family:inherit;}
+  .tag.selected{background:var(--gold2);color:#1a1208;border-color:transparent;font-weight:600;}
 
-  /* ── Intensity Slider ── */
-  .intensity-row { display: flex; justify-content: space-between; align-items: center; margin-bottom: 10px; }
-  .intensity-badge {
-    border-radius: var(--radius-pill); padding: 3px 14px;
-    font-size: 15px; font-weight: 700; color: #fff; min-width: 42px; text-align: center;
-    transition: background 0.3s;
-  }
-  input[type=range] {
-    width: 100%; cursor: pointer;
-    accent-color: var(--gold2);
-  }
-  .intensity-hint { display: flex; justify-content: space-between; font-size: 11px; color: var(--text3); margin-top: 5px; }
-
-  .slider-card {
-    background: var(--bg3); border: 1px solid var(--border2);
-    border-radius: var(--radius); padding: 16px 18px; margin-bottom: 8px;
-  }
+  /* ── Intensity ── */
+  .intensity-row{display:flex;justify-content:space-between;align-items:center;margin-bottom:10px;}
+  .intensity-badge{border-radius:var(--radius-pill);padding:3px 14px;font-size:15px;font-weight:700;color:#fff;min-width:42px;text-align:center;transition:background 0.3s;}
+  input[type=range]{width:100%;cursor:pointer;accent-color:var(--gold2);}
+  .intensity-hint{display:flex;justify-content:space-between;font-size:11px;color:var(--text3);margin-top:5px;}
+  .slider-card{background:var(--bg3);border:1px solid var(--border2);border-radius:var(--radius);padding:16px 18px;margin-bottom:8px;}
 
   /* ── Buttons ── */
-  .btn-primary {
-    width: 100%; padding: 14px;
-    background: linear-gradient(135deg, var(--gold2), var(--gold));
-    color: #1a1208; border: none; border-radius: var(--radius);
-    font-size: 15px; font-weight: 700; cursor: pointer;
-    font-family: 'Noto Serif TC', serif; letter-spacing: 2px; margin-top: 10px;
-    transition: opacity 0.2s;
-  }
-  .btn-primary:hover { opacity: 0.9; }
-  .btn-primary:disabled { opacity: 0.5; cursor: default; }
+  .btn-primary{width:100%;padding:14px;background:linear-gradient(135deg,var(--gold2),var(--gold));color:#1a1208;border:none;border-radius:var(--radius);font-size:15px;font-weight:700;cursor:pointer;font-family:'Noto Serif TC',serif;letter-spacing:2px;margin-top:10px;transition:opacity 0.2s;}
+  .btn-primary:hover{opacity:0.9;}
+  .btn-update{width:100%;padding:14px;background:linear-gradient(135deg,#1a4a2e,#225e3a);color:#8fd4a8;border:1px solid #2e7a50;border-radius:var(--radius);font-size:15px;font-weight:700;cursor:pointer;font-family:'Noto Serif TC',serif;letter-spacing:2px;margin-top:6px;display:none;}
+  .btn-cancel-edit{width:100%;padding:11px;background:transparent;border:1px solid var(--border2);color:var(--text3);border-radius:var(--radius);font-size:13px;cursor:pointer;font-family:inherit;margin-top:6px;display:none;}
+  .btn-outline{padding:8px 18px;background:transparent;border:1px solid var(--border2);border-radius:var(--radius-pill);color:var(--text2);font-size:13px;cursor:pointer;font-family:inherit;transition:all 0.2s;}
+  .btn-outline:hover{border-color:var(--gold2);color:var(--gold2);}
+  .btn-edit{padding:5px 13px;background:transparent;border:1px solid #2a5040;border-radius:var(--radius-sm);color:#6baa88;font-size:12px;cursor:pointer;font-family:inherit;}
+  .btn-edit:hover{background:#1a3028;}
+  .btn-danger{padding:5px 13px;background:transparent;border:1px solid #5a2020;border-radius:var(--radius-sm);color:#a05050;font-size:12px;cursor:pointer;font-family:inherit;}
 
-  .btn-outline {
-    padding: 8px 18px; background: transparent;
-    border: 1px solid var(--border2); border-radius: var(--radius-pill);
-    color: var(--text2); font-size: 13px; cursor: pointer; font-family: inherit;
-    transition: all 0.2s;
-  }
-  .btn-outline:hover { border-color: var(--gold2); color: var(--gold2); }
+  /* ── Edit Banner ── */
+  .edit-banner{background:linear-gradient(135deg,#172a1e,#102018);border:1px solid #2a5035;border-radius:var(--radius);padding:12px 16px;margin-bottom:16px;display:none;gap:10px;align-items:flex-start;}
+  .edit-banner-icon{font-size:22px;flex-shrink:0;}
+  .edit-banner-emotion{color:var(--gold);font-weight:700;}
+  .edit-banner-date{color:var(--text3);font-size:11px;}
 
-  .btn-danger {
-    padding: 5px 14px; background: transparent;
-    border: 1px solid #5a2020; border-radius: var(--radius-sm);
-    color: #a05050; font-size: 12px; cursor: pointer; font-family: inherit;
-  }
-
-  /* ── Stats Row ── */
-  .stats-row { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 10px; margin-bottom: 20px; }
-  .stat-card {
-    background: var(--bg2); border: 1px solid var(--border);
-    border-radius: var(--radius-sm); padding: 12px 8px; text-align: center;
-  }
-  .stat-value { color: var(--gold); font-size: 20px; font-weight: 700; font-family: 'Noto Serif TC', serif; }
-  .stat-label { color: var(--text3); font-size: 10px; margin-top: 4px; }
+  /* ── Stats ── */
+  .stats-row{display:grid;grid-template-columns:1fr 1fr 1fr;gap:10px;margin-bottom:20px;}
+  .stat-card{background:var(--bg2);border:1px solid var(--border);border-radius:var(--radius-sm);padding:12px 8px;text-align:center;}
+  .stat-value{color:var(--gold);font-size:20px;font-weight:700;font-family:'Noto Serif TC',serif;}
+  .stat-label{color:var(--text3);font-size:10px;margin-top:4px;}
 
   /* ── Entry Cards ── */
-  .entry-card {
-    background: linear-gradient(135deg, var(--bg3) 0%, var(--bg2) 100%);
-    border: 1px solid var(--border); border-radius: var(--radius);
-    padding: 14px 16px; margin-bottom: 10px; cursor: pointer;
-    box-shadow: 0 2px 12px rgba(0,0,0,0.25); transition: border-color 0.2s;
-  }
-  .entry-card:hover { border-color: var(--border2); }
-  .entry-card.open { border-color: var(--gold2); }
+  .entry-card{background:linear-gradient(135deg,var(--bg3) 0%,var(--bg2) 100%);border:1px solid var(--border);border-radius:var(--radius);padding:14px 16px;margin-bottom:10px;cursor:pointer;box-shadow:0 2px 12px rgba(0,0,0,0.25);transition:border-color 0.2s;}
+  .entry-card:hover{border-color:var(--border2);}
+  .entry-card.open{border-color:var(--gold2);}
+  .entry-head{display:flex;justify-content:space-between;align-items:center;}
+  .entry-left{display:flex;align-items:center;gap:10px;}
+  .entry-badge{border-radius:50%;width:34px;height:34px;display:flex;align-items:center;justify-content:center;font-size:14px;font-weight:700;color:#fff;flex-shrink:0;}
+  .entry-emotion{color:var(--text);font-weight:600;font-size:15px;}
+  .entry-edited{font-size:10px;color:var(--orange);margin-left:6px;}
+  .entry-trigger-preview{color:var(--text3);font-size:12px;margin-top:3px;}
+  .entry-body{margin-top:14px;border-top:1px solid var(--border);padding-top:14px;display:flex;flex-direction:column;gap:10px;}
+  .entry-field-label{color:var(--text3);font-size:11px;margin-bottom:3px;}
+  .entry-field-value{color:var(--text2);font-size:14px;line-height:1.6;}
+  .entry-actions{display:flex;justify-content:flex-end;gap:8px;margin-top:6px;}
 
-  .entry-head { display: flex; justify-content: space-between; align-items: center; }
-  .entry-left { display: flex; align-items: center; gap: 10px; }
-  .entry-badge {
-    border-radius: 50%; width: 34px; height: 34px;
-    display: flex; align-items: center; justify-content: center;
-    font-size: 14px; font-weight: 700; color: #fff; flex-shrink: 0;
-  }
-  .entry-emotion { color: var(--text); font-weight: 600; font-size: 15px; }
-  .entry-trigger-preview { color: var(--text3); font-size: 12px; margin-top: 3px; }
-  .entry-date { color: var(--text3); font-size: 11px; }
+  /* ── Version History ── */
+  .version-item{background:var(--bg3);border:1px solid var(--border);border-radius:var(--radius-sm);padding:12px 14px;margin-bottom:8px;}
+  .version-time{color:var(--text3);font-size:11px;margin-bottom:5px;}
+  .version-row{display:flex;align-items:center;gap:7px;flex-wrap:wrap;}
+  .version-emotion{color:var(--gold2);font-size:13px;font-weight:600;}
+  .version-pill{font-size:10px;padding:2px 9px;border-radius:10px;font-weight:700;}
+  .version-pill.created{background:#1a3028;color:#6baa88;}
+  .version-pill.edited{background:#2e1e08;color:#c8a862;}
+  .version-trigger{color:var(--text3);font-size:12px;margin-top:4px;}
 
-  .entry-body {
-    display: none; margin-top: 14px;
-    border-top: 1px solid var(--border); padding-top: 14px;
-    display: flex; flex-direction: column; gap: 10px;
-  }
-  .entry-field-label { color: var(--text3); font-size: 11px; margin-bottom: 3px; }
-  .entry-field-value { color: var(--text2); font-size: 14px; line-height: 1.6; }
-  .entry-actions { display: flex; justify-content: flex-end; margin-top: 6px; }
+  /* ── Export ── */
+  .export-box{background:var(--bg3);border:1px solid var(--border2);border-radius:var(--radius);padding:16px;}
+  .export-prompt{background:var(--bg2);border:1px solid var(--border);border-radius:var(--radius-sm);padding:14px;font-size:13px;color:var(--text2);line-height:1.8;white-space:pre-wrap;max-height:220px;overflow-y:auto;font-family:'Noto Sans TC',sans-serif;margin-bottom:14px;}
+  .copy-success{text-align:center;padding:8px;color:var(--green);font-size:13px;display:none;}
 
-  /* ── Export Page ── */
-  .export-box {
-    background: var(--bg3); border: 1px solid var(--border2);
-    border-radius: var(--radius); padding: 16px;
-  }
-  .export-prompt {
-    background: var(--bg2); border: 1px solid var(--border);
-    border-radius: var(--radius-sm); padding: 14px;
-    font-size: 13px; color: var(--text2); line-height: 1.8;
-    white-space: pre-wrap; max-height: 220px; overflow-y: auto;
-    font-family: 'Noto Sans TC', sans-serif;
-    margin-bottom: 14px;
-  }
-  .export-text-area {
-    width: 100%; min-height: 180px; font-size: 12px;
-    color: var(--text2); background: var(--bg2);
-    border: 1px solid var(--border); border-radius: var(--radius-sm);
-    padding: 12px; font-family: 'Noto Sans TC', sans-serif;
-    line-height: 1.7; margin-bottom: 12px;
-    resize: vertical;
-  }
-  .copy-success {
-    text-align: center; padding: 8px;
-    color: var(--green); font-size: 13px;
-    display: none;
-  }
-
-  /* ── Empty State ── */
-  .empty {
-    text-align: center; padding: 60px 20px;
-    color: var(--text4); font-size: 14px; line-height: 2;
-  }
-  .empty-icon { font-size: 44px; margin-bottom: 14px; }
+  /* ── Empty ── */
+  .empty{text-align:center;padding:60px 20px;color:var(--text4);font-size:14px;line-height:2;}
+  .empty-icon{font-size:44px;margin-bottom:14px;}
 
   /* ── Filter ── */
-  .filter-row { margin-bottom: 16px; }
+  .filter-row{margin-bottom:16px;}
 
   /* ── Toast ── */
-  .toast {
-    position: fixed; bottom: 30px; left: 50%;
-    transform: translateX(-50%); background: var(--gold2);
-    color: #1a1208; padding: 10px 24px; border-radius: var(--radius-pill);
-    font-size: 14px; font-weight: 700; z-index: 999;
-    opacity: 0; transition: opacity 0.3s; pointer-events: none;
-  }
-  .toast.show { opacity: 1; }
+  .toast{position:fixed;bottom:30px;left:50%;transform:translateX(-50%);background:var(--gold2);color:#1a1208;padding:10px 24px;border-radius:var(--radius-pill);font-size:14px;font-weight:700;z-index:999;opacity:0;transition:opacity 0.3s;pointer-events:none;}
+  .toast.show{opacity:1;}
 
-  .field-group { margin-bottom: 16px; }
+  .field-group{margin-bottom:16px;}
 </style>
 </head>
 <body>
+
+<!-- Storage Notice -->
+<div class="notice" id="storage-notice">
+  <button class="notice-close" onclick="dismissNotice()" title="關閉">✕</button>
+  <div class="notice-title">🔒 資料儲存說明</div>
+  <div class="notice-body">
+    你的所有記錄<strong>僅存放在這台裝置的瀏覽器裡</strong>，不會上傳至任何伺服器，任何人都無法存取你的資料。技術上使用瀏覽器內建的 localStorage，關閉頁面後資料依然保留。
+    <span class="warn">⚠ 換裝置或清除瀏覽器快取時資料不會跟著轉移。建議定期在「AI 分析」頁匯出備份。</span>
+  </div>
+</div>
 
 <!-- Header -->
 <div class="header">
@@ -245,6 +149,7 @@
     <div class="header-title">⚔️ 狀態日誌</div>
     <div class="header-sub">心智武者 · NLP 狀態覺察系統</div>
   </div>
+  <div class="edit-mode-pill" id="edit-pill">編輯模式</div>
 </div>
 
 <!-- Tab Bar -->
@@ -257,155 +162,170 @@
 <!-- ═══ RECORD PAGE ═══ -->
 <div id="page-record" class="page active">
 
-  <div class="divider">情緒感受</div>
+  <!-- Edit Banner -->
+  <div class="edit-banner" id="edit-banner">
+    <div class="edit-banner-icon">✏️</div>
+    <div>
+      <div style="color:#8fd4a8;font-size:12px;margin-bottom:3px">正在編輯：</div>
+      <div class="edit-banner-emotion" id="edit-banner-emotion"></div>
+      <div class="edit-banner-date" id="edit-banner-date"></div>
+    </div>
+  </div>
 
+  <div class="divider">情緒感受</div>
   <div class="field-group">
     <label>選擇情緒狀態</label>
     <div class="tag-group" id="emotion-tags"></div>
   </div>
-
   <div class="field-group">
     <label>或自訂情緒</label>
     <input type="text" id="custom-emotion" placeholder="例：複雜的無力感、壓抑的興奮…">
   </div>
-
   <div class="slider-card">
     <div class="intensity-row">
       <label style="margin:0">強度 (1–10)</label>
       <div class="intensity-badge" id="intensity-badge">5</div>
     </div>
-    <input type="range" id="intensity-slider" min="1" max="10" value="5"
-      oninput="updateIntensity(this.value)">
-    <div class="intensity-hint">
-      <span>微弱 1</span><span>中等 5</span><span>強烈 10</span>
-    </div>
+    <input type="range" id="intensity-slider" min="1" max="10" value="5" oninput="updateIntensity(this.value)">
+    <div class="intensity-hint"><span>微弱 1</span><span>中等 5</span><span>強烈 10</span></div>
   </div>
 
   <div class="divider">身體狀態</div>
-
   <div class="field-group">
     <label>感受部位（可複選）</label>
     <div class="tag-group" id="body-tags"></div>
   </div>
-
   <div class="field-group">
     <label>🫁 身體感受描述</label>
-    <textarea id="body-desc" placeholder="例：胸口緊繃、肩膀沉重、腹部有一股熱流、雙手發涼…"></textarea>
+    <textarea id="body-desc" placeholder="例：胸口緊繃、肩膀沉重、腹部有一股熱流…"></textarea>
   </div>
 
   <div class="divider">內心世界</div>
-
   <div class="field-group">
     <label>🎬 內心電影（你看到什麼畫面？聽到什麼聲音？身體有什麼感覺？）</label>
     <textarea id="inner-movie" placeholder="例：腦海中出現模糊的黑白畫面，聲音低沉，有一種往下沉的感覺…"></textarea>
   </div>
-
   <div class="field-group">
     <label>📜 內心劇本（你在對自己說什麼？）</label>
     <textarea id="script" placeholder="例：「我又搞砸了」、「他不在乎我」、「這次一定可以」…"></textarea>
   </div>
 
   <div class="divider">情境觸發</div>
-
   <div class="field-group">
-    <label>⚡ 什麼觸發了這個狀態？（發生了什麼事？）</label>
-    <textarea id="trigger" placeholder="例：對方沒有回訊息、開會被打斷、看到某個畫面、想到某件事…"></textarea>
+    <label>⚡ 什麼觸發了這個狀態？</label>
+    <textarea id="trigger" placeholder="例：對方沒有回訊息、開會被打斷、看到某個畫面…"></textarea>
   </div>
-
   <div class="field-group">
     <label>📝 額外備註</label>
     <textarea id="note" style="min-height:60px" placeholder="任何其他觀察或想法…"></textarea>
   </div>
 
-  <button class="btn-primary" onclick="saveEntry()">✦ 記錄這個狀態</button>
+  <button class="btn-primary" id="btn-save" onclick="saveEntry()">✦ 記錄這個狀態</button>
+  <button class="btn-update" id="btn-update" onclick="updateEntry()">✓ 儲存修改</button>
+  <button class="btn-cancel-edit" id="btn-cancel" onclick="cancelEdit()">✕ 取消編輯</button>
+
+  <!-- Version Changelog -->
+  <div class="divider" style="margin-top:40px">版本紀錄</div>
+  <div style="display:flex;flex-direction:column;gap:8px;padding-bottom:10px">
+    <div style="display:flex;gap:10px;align-items:flex-start">
+      <span style="color:var(--gold2);font-size:11px;font-weight:700;flex-shrink:0;margin-top:1px">v1.2</span>
+      <div style="font-size:12px;color:var(--text3);line-height:1.7">新增「編輯」功能，可修改歷史記錄；新增儲存說明橫幅；記錄顯示編輯次數與最後修改時間。</div>
+    </div>
+    <div style="display:flex;gap:10px;align-items:flex-start">
+      <span style="color:var(--text3);font-size:11px;font-weight:700;flex-shrink:0;margin-top:1px">v1.1</span>
+      <div style="font-size:12px;color:var(--text4);line-height:1.7">新增 AI 分析匯出功能，可一鍵生成結構化提示詞貼到 AI 分析情緒模式。</div>
+    </div>
+    <div style="display:flex;gap:10px;align-items:flex-start">
+      <span style="color:var(--text3);font-size:11px;font-weight:700;flex-shrink:0;margin-top:1px">v1.0</span>
+      <div style="font-size:12px;color:var(--text4);line-height:1.7">初版發布。六大欄位記錄（情緒、強度、身體、內心電影、劇本、觸發情境），資料本地儲存。</div>
+    </div>
+  </div>
 </div>
 
 <!-- ═══ HISTORY PAGE ═══ -->
 <div id="page-history" class="page">
   <div id="stats-row" class="stats-row" style="display:none"></div>
-  <div class="filter-row">
-    <div class="tag-group" id="filter-tags"></div>
-  </div>
+  <div class="filter-row"><div class="tag-group" id="filter-tags"></div></div>
   <div id="entry-list"></div>
 </div>
 
 <!-- ═══ EXPORT PAGE ═══ -->
 <div id="page-export" class="page">
-
   <div class="divider">匯出給 AI 分析</div>
-
-  <p style="color:var(--text2); font-size:13px; line-height:1.8; margin-bottom:18px;">
-    點擊下方按鈕，將你的狀態日誌整理成一段文字，貼到任何 AI（Claude、ChatGPT 等）進行分析，了解你的情緒模式、常見觸發點、以及可以採取的行動。
+  <p style="color:var(--text2);font-size:13px;line-height:1.8;margin-bottom:18px">
+    將你的狀態日誌整理成結構化文字，貼到任何 AI（Claude、ChatGPT 等）進行深度分析，了解你的情緒模式、觸發點與信念系統。
   </p>
-
   <div class="export-box">
-    <label style="margin-bottom:10px">📋 AI 分析提示詞（含你的日誌資料）</label>
-    <div class="export-prompt" id="ai-prompt-preview">
-      點擊「生成匯出文字」查看內容…
-    </div>
+    <label style="margin-bottom:10px">📋 AI 分析提示詞（含日誌資料）</label>
+    <div class="export-prompt" id="ai-prompt-preview">點擊「生成匯出文字」查看內容…</div>
     <button class="btn-primary" onclick="generateExport()" style="margin-bottom:10px">🔄 生成匯出文字</button>
-    <button class="btn-primary" onclick="copyExport()" style="background: linear-gradient(135deg,#2e6b4e,#3d8c5e); margin-top:0">📋 複製到剪貼簿</button>
+    <button class="btn-primary" onclick="copyExport()" style="background:linear-gradient(135deg,#2e6b4e,#3d8c5e);margin-top:0">📋 複製到剪貼簿</button>
     <div class="copy-success" id="copy-success">✓ 已複製！現在貼到 AI 聊天視窗即可</div>
   </div>
-
   <div class="divider">自訂分析方向</div>
-
   <div class="field-group">
     <label>你特別想讓 AI 關注哪些面向？（選填）</label>
-    <textarea id="analysis-focus" style="min-height:70px"
-      placeholder="例：我想了解我的憤怒觸發點、我想知道哪些情境讓我狀態最差、我想要改善建議…"></textarea>
+    <textarea id="analysis-focus" style="min-height:70px" placeholder="例：我想了解我的憤怒觸發點、哪些情境讓我狀態最差…"></textarea>
   </div>
-
   <div class="divider">清除資料</div>
-  <p style="color:var(--text3); font-size:12px; line-height:1.7; margin-bottom:14px;">
-    如需清除所有記錄，請謹慎操作，此動作無法還原。
-  </p>
-  <button class="btn-outline" onclick="confirmClear()" style="color:#a05050; border-color:#5a2020">
-    🗑️ 清除所有記錄
-  </button>
-
+  <p style="color:var(--text3);font-size:12px;line-height:1.7;margin-bottom:14px">清除所有記錄，此動作無法還原，請謹慎操作。</p>
+  <button class="btn-outline" onclick="confirmClear()" style="color:#a05050;border-color:#5a2020">🗑️ 清除所有記錄</button>
 </div>
+
+
 
 <!-- Toast -->
 <div class="toast" id="toast"></div>
 
 <script>
-// ══════════════════════════════════════════
+// ════════════════════════════════════════
 // DATA
-// ══════════════════════════════════════════
+// ════════════════════════════════════════
 const EMOTIONS = ["恐懼","憤怒","悲傷","焦慮","平靜","喜悅","興奮","自信","感恩","困惑","羞愧","無力","厭倦","期待","委屈","緊張"];
 const BODY_ZONES = ["頭部","眼睛","胸口","腹部","肩頸","背部","四肢","全身"];
 
 let entries = JSON.parse(localStorage.getItem('stateJournal') || '[]');
+
+
 let selectedEmotions = new Set();
 let selectedBodyZones = new Set();
 let activeFilter = '';
 let openCardId = null;
+let editingId = null;
 let exportGenerated = false;
 
 function save() {
   localStorage.setItem('stateJournal', JSON.stringify(entries));
 }
 
-// ══════════════════════════════════════════
+// ── Notice ──
+function dismissNotice() {
+  document.getElementById('storage-notice').style.display = 'none';
+  localStorage.setItem('noticeDismissed', '1');
+}
+if (localStorage.getItem('noticeDismissed')) {
+  document.getElementById('storage-notice').style.display = 'none';
+}
+
+// ════════════════════════════════════════
 // TABS
-// ══════════════════════════════════════════
+// ════════════════════════════════════════
 function switchTab(tab) {
-  document.querySelectorAll('.tab').forEach((t,i) => {
-    const tabs = ['record','history','export'];
-    t.classList.toggle('active', tabs[i] === tab);
-  });
+  const tabs = ['record','history','export'];
+  document.querySelectorAll('.tab').forEach((t,i) => t.classList.toggle('active', tabs[i] === tab));
   document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
   document.getElementById('page-' + tab).classList.add('active');
   if (tab === 'history') renderHistory();
-  if (tab === 'export') { exportGenerated = false; document.getElementById('ai-prompt-preview').textContent = '點擊「生成匯出文字」查看內容…'; }
+  if (tab === 'export') {
+    exportGenerated = false;
+    document.getElementById('ai-prompt-preview').textContent = '點擊「生成匯出文字」查看內容…';
+  }
 }
 
-// ══════════════════════════════════════════
+// ════════════════════════════════════════
 // INIT TAGS
-// ══════════════════════════════════════════
+// ════════════════════════════════════════
 function initTags() {
-  // Emotion tags
   const et = document.getElementById('emotion-tags');
   EMOTIONS.forEach(e => {
     const btn = document.createElement('button');
@@ -416,8 +336,6 @@ function initTags() {
     };
     et.appendChild(btn);
   });
-
-  // Body zone tags
   const bt = document.getElementById('body-tags');
   BODY_ZONES.forEach(z => {
     const btn = document.createElement('button');
@@ -430,9 +348,9 @@ function initTags() {
   });
 }
 
-// ══════════════════════════════════════════
+// ════════════════════════════════════════
 // INTENSITY
-// ══════════════════════════════════════════
+// ════════════════════════════════════════
 function updateIntensity(v) {
   v = Number(v);
   const badge = document.getElementById('intensity-badge');
@@ -441,21 +359,18 @@ function updateIntensity(v) {
 }
 updateIntensity(5);
 
-// ══════════════════════════════════════════
-// SAVE ENTRY
-// ══════════════════════════════════════════
+// ════════════════════════════════════════
+// SAVE NEW ENTRY
+// ════════════════════════════════════════
 function saveEntry() {
   const customEmotion = document.getElementById('custom-emotion').value.trim();
   const emotionList = [...selectedEmotions];
-
-  if (emotionList.length === 0 && !customEmotion) {
-    showToast('請先選擇或輸入情緒狀態');
-    return;
-  }
-
+  if (emotionList.length === 0 && !customEmotion) { showToast('請先選擇或輸入情緒狀態'); return; }
   const entry = {
     id: Date.now().toString(),
     createdAt: new Date().toISOString(),
+    updatedAt: null,
+    editCount: 0,
     emotions: emotionList,
     customEmotion,
     intensity: Number(document.getElementById('intensity-slider').value),
@@ -466,17 +381,106 @@ function saveEntry() {
     trigger: document.getElementById('trigger').value.trim(),
     note: document.getElementById('note').value.trim(),
   };
-
   entries.unshift(entry);
   save();
   resetForm();
   showToast('✦ 狀態已記錄');
 }
 
-function resetForm() {
+// ════════════════════════════════════════
+// EDIT ENTRY
+// ════════════════════════════════════════
+function startEdit(id, e) {
+  e.stopPropagation();
+  const entry = entries.find(en => en.id === id);
+  if (!entry) return;
+  editingId = id;
+
+  // Populate form with existing data
+  resetFormSilent();
+  entry.emotions.forEach(em => {
+    selectedEmotions.add(em);
+    document.querySelectorAll('#emotion-tags .tag').forEach(btn => {
+      if (btn.textContent === em) btn.classList.add('selected');
+    });
+  });
+  entry.bodyZones.forEach(z => {
+    selectedBodyZones.add(z);
+    document.querySelectorAll('#body-tags .tag').forEach(btn => {
+      if (btn.textContent === z) btn.classList.add('selected');
+    });
+  });
+  document.getElementById('custom-emotion').value = entry.customEmotion || '';
+  document.getElementById('intensity-slider').value = entry.intensity;
+  updateIntensity(entry.intensity);
+  document.getElementById('body-desc').value = entry.bodyDesc || '';
+  document.getElementById('inner-movie').value = entry.innerMovie || '';
+  document.getElementById('script').value = entry.script || '';
+  document.getElementById('trigger').value = entry.trigger || '';
+  document.getElementById('note').value = entry.note || '';
+
+  // Show edit mode UI
+  const emotionLabel = [...entry.emotions, entry.customEmotion].filter(Boolean).join('・') || '未命名';
+  document.getElementById('edit-banner').style.display = 'flex';
+  document.getElementById('edit-banner-emotion').textContent = emotionLabel;
+  document.getElementById('edit-banner-date').textContent = '建立於 ' + formatDate(entry.createdAt);
+  document.getElementById('edit-pill').style.display = 'block';
+  document.getElementById('btn-save').style.display = 'none';
+  document.getElementById('btn-update').style.display = 'block';
+  document.getElementById('btn-cancel').style.display = 'block';
+
+  switchTab('record');
+  window.scrollTo({ top: 0, behavior: 'smooth' });
+}
+
+function updateEntry() {
+  if (!editingId) return;
+  const idx = entries.findIndex(en => en.id === editingId);
+  if (idx === -1) return;
+  const customEmotion = document.getElementById('custom-emotion').value.trim();
+  const emotionList = [...selectedEmotions];
+  if (emotionList.length === 0 && !customEmotion) { showToast('請先選擇或輸入情緒狀態'); return; }
+
+  const updated = {
+    ...entries[idx],
+    updatedAt: new Date().toISOString(),
+    editCount: (entries[idx].editCount || 0) + 1,
+    emotions: emotionList,
+    customEmotion,
+    intensity: Number(document.getElementById('intensity-slider').value),
+    bodyZones: [...selectedBodyZones],
+    bodyDesc: document.getElementById('body-desc').value.trim(),
+    innerMovie: document.getElementById('inner-movie').value.trim(),
+    script: document.getElementById('script').value.trim(),
+    trigger: document.getElementById('trigger').value.trim(),
+    note: document.getElementById('note').value.trim(),
+  };
+  entries[idx] = updated;
+  save();
+  cancelEdit();
+  showToast('✓ 修改已儲存');
+}
+
+function cancelEdit() {
+  editingId = null;
+  resetForm();
+  document.getElementById('edit-banner').style.display = 'none';
+  document.getElementById('edit-pill').style.display = 'none';
+  document.getElementById('btn-save').style.display = 'block';
+  document.getElementById('btn-update').style.display = 'none';
+  document.getElementById('btn-cancel').style.display = 'none';
+}
+
+// ════════════════════════════════════════
+// RESET FORM
+// ════════════════════════════════════════
+function resetFormSilent() {
   selectedEmotions.clear();
   selectedBodyZones.clear();
   document.querySelectorAll('#emotion-tags .tag, #body-tags .tag').forEach(t => t.classList.remove('selected'));
+}
+function resetForm() {
+  resetFormSilent();
   document.getElementById('custom-emotion').value = '';
   document.getElementById('intensity-slider').value = 5;
   updateIntensity(5);
@@ -485,34 +489,30 @@ function resetForm() {
   });
 }
 
-// ══════════════════════════════════════════
+// ════════════════════════════════════════
 // HISTORY
-// ══════════════════════════════════════════
+// ════════════════════════════════════════
 function renderHistory() {
   const list = document.getElementById('entry-list');
   const statsRow = document.getElementById('stats-row');
   const filterDiv = document.getElementById('filter-tags');
 
   if (entries.length === 0) {
-    statsRow.style.display = 'none';
-    filterDiv.innerHTML = '';
+    statsRow.style.display = 'none'; filterDiv.innerHTML = '';
     list.innerHTML = `<div class="empty"><div class="empty-icon">⚔️</div><div>尚無狀態記錄</div><div style="font-size:12px;margin-top:8px;color:var(--text4)">覺察是改變的第一步</div></div>`;
     return;
   }
 
-  // Stats
   statsRow.style.display = 'grid';
-  const avgIntensity = (entries.reduce((s,e) => s + e.intensity, 0) / entries.length).toFixed(1);
-  const allEmotions = entries.flatMap(e => [...e.emotions, e.customEmotion].filter(Boolean));
-  const topEmotion = allEmotions.length > 0
-    ? Object.entries(allEmotions.reduce((acc, em) => { acc[em] = (acc[em]||0)+1; return acc; }, {}))
-        .sort((a,b) => b[1]-a[1])[0][0]
+  const avg = (entries.reduce((s,e) => s + e.intensity, 0) / entries.length).toFixed(1);
+  const allEm = entries.flatMap(e => [...e.emotions, e.customEmotion].filter(Boolean));
+  const topEm = allEm.length > 0
+    ? Object.entries(allEm.reduce((a,em) => { a[em]=(a[em]||0)+1; return a; },{})).sort((a,b)=>b[1]-a[1])[0][0]
     : '—';
-
   statsRow.innerHTML = `
     <div class="stat-card"><div class="stat-value">${entries.length}</div><div class="stat-label">總記錄</div></div>
-    <div class="stat-card"><div class="stat-value">${avgIntensity}</div><div class="stat-label">平均強度</div></div>
-    <div class="stat-card"><div class="stat-value" style="font-size:15px">${topEmotion}</div><div class="stat-label">最常出現</div></div>
+    <div class="stat-card"><div class="stat-value">${avg}</div><div class="stat-label">平均強度</div></div>
+    <div class="stat-card"><div class="stat-value" style="font-size:14px">${topEm}</div><div class="stat-label">最常出現</div></div>
   `;
 
   // Filter tags
@@ -523,7 +523,6 @@ function renderHistory() {
   allBtn.textContent = '全部';
   allBtn.onclick = () => { activeFilter = ''; renderHistory(); };
   filterDiv.appendChild(allBtn);
-
   emotionSet.forEach(em => {
     const btn = document.createElement('button');
     btn.className = 'tag' + (activeFilter === em ? ' selected' : '');
@@ -532,25 +531,24 @@ function renderHistory() {
     filterDiv.appendChild(btn);
   });
 
-  // Entries
-  const filtered = activeFilter
-    ? entries.filter(e => [...e.emotions, e.customEmotion].includes(activeFilter))
-    : entries;
-
+  const filtered = activeFilter ? entries.filter(e => [...e.emotions, e.customEmotion].includes(activeFilter)) : entries;
   list.innerHTML = '';
+
   filtered.forEach(entry => {
     const emotionLabel = [...entry.emotions, entry.customEmotion].filter(Boolean).join('・') || '未命名';
     const color = entry.intensity >= 8 ? '#c0392b' : entry.intensity >= 5 ? '#e67e22' : '#3d8c5e';
     const isOpen = openCardId === entry.id;
-    const date = formatDate(entry.createdAt);
+    const editedBadge = entry.editCount > 0 ? `<span class="entry-edited">✎ ${entry.editCount}</span>` : '';
+    const updatedLine = entry.updatedAt
+      ? `<div style="color:var(--text3);font-size:10px;margin-top:1px">修改 ${formatDate(entry.updatedAt)}</div>` : '';
 
     const fields = [
-      { label: '🫀 身體部位', value: entry.bodyZones.join('、') },
-      { label: '🫁 身體感受', value: entry.bodyDesc },
-      { label: '🎬 內心電影', value: entry.innerMovie },
-      { label: '📜 內心劇本', value: entry.script },
-      { label: '⚡ 情境觸發', value: entry.trigger },
-      { label: '📝 備註', value: entry.note },
+      { label:'🫀 身體部位', value: entry.bodyZones.join('、') },
+      { label:'🫁 身體感受', value: entry.bodyDesc },
+      { label:'🎬 內心電影', value: entry.innerMovie },
+      { label:'📜 內心劇本', value: entry.script },
+      { label:'⚡ 情境觸發', value: entry.trigger },
+      { label:'📝 備註', value: entry.note },
     ].filter(f => f.value);
 
     const card = document.createElement('div');
@@ -560,33 +558,30 @@ function renderHistory() {
         <div class="entry-left">
           <div class="entry-badge" style="background:${color}">${entry.intensity}</div>
           <div>
-            <div class="entry-emotion">${emotionLabel}</div>
+            <div class="entry-emotion">${emotionLabel}${editedBadge}</div>
             ${entry.trigger ? `<div class="entry-trigger-preview">⚡ ${entry.trigger.slice(0,28)}${entry.trigger.length>28?'…':''}</div>` : ''}
           </div>
         </div>
-        <div style="display:flex;align-items:center;gap:8px">
-          <span class="entry-date">${date}</span>
-          <span style="color:var(--gold2);font-size:11px">${isOpen?'▲':'▼'}</span>
+        <div style="text-align:right">
+          <div style="color:var(--text3);font-size:11px">${formatDate(entry.createdAt)}</div>
+          ${updatedLine}
+          <div style="color:var(--gold2);font-size:10px;margin-top:3px">${isOpen?'▲':'▼'}</div>
         </div>
       </div>
-      ${isOpen && fields.length > 0 ? `
+      ${isOpen ? `
         <div class="entry-body">
-          ${fields.map(f => `
+          ${fields.length > 0 ? fields.map(f => `
             <div>
               <div class="entry-field-label">${f.label}</div>
               <div class="entry-field-value">${f.value}</div>
-            </div>
-          `).join('')}
+            </div>`).join('') : '<div style="color:var(--text4);font-size:13px">無其他詳細資料</div>'}
           <div class="entry-actions">
+            <button class="btn-edit" onclick="startEdit('${entry.id}', event)">✏️ 編輯</button>
             <button class="btn-danger" onclick="deleteEntry('${entry.id}', event)">刪除</button>
           </div>
-        </div>
-      ` : ''}
+        </div>` : ''}
     `;
-    card.onclick = () => {
-      openCardId = isOpen ? null : entry.id;
-      renderHistory();
-    };
+    card.onclick = () => { openCardId = isOpen ? null : entry.id; renderHistory(); };
     list.appendChild(card);
   });
 }
@@ -596,32 +591,23 @@ function deleteEntry(id, e) {
   if (!confirm('確定刪除這筆記錄？')) return;
   entries = entries.filter(en => en.id !== id);
   openCardId = null;
-  save();
-  renderHistory();
+  save(); renderHistory();
+  showToast('已刪除');
 }
 
-// ══════════════════════════════════════════
+// ════════════════════════════════════════
 // EXPORT
-// ══════════════════════════════════════════
+// ════════════════════════════════════════
 function generateExport() {
-  if (entries.length === 0) {
-    showToast('尚無記錄可匯出');
-    return;
-  }
-
+  if (entries.length === 0) { showToast('尚無記錄可匯出'); return; }
   const focus = document.getElementById('analysis-focus').value.trim();
-
   let text = `你是一位 NLP 心理教練，擅長狀態管理與情緒模式分析。以下是我的「NLP 狀態日誌」記錄，共 ${entries.length} 筆，時間範圍：${formatDate(entries[entries.length-1].createdAt)} 至 ${formatDate(entries[0].createdAt)}。\n\n`;
-
-  text += `請幫我做以下分析：\n1. 最常出現的情緒狀態與強度分布\n2. 常見的情境觸發點（什麼情況最容易引發狀態）\n3. 內心電影與劇本的模式（我的信念系統有什麼傾向）\n4. 身體反應的規律（哪些部位最常被影響）\n5. 具體的狀態管理建議\n`;
-
+  text += `請幫我做以下分析：\n1. 最常出現的情緒狀態與強度分布\n2. 常見的情境觸發點\n3. 內心電影與劇本的模式（信念系統傾向）\n4. 身體反應的規律\n5. 具體的狀態管理建議\n`;
   if (focus) text += `\n另外，我特別想了解：${focus}\n`;
-
   text += `\n${'─'.repeat(40)}\n📊 狀態日誌資料\n${'─'.repeat(40)}\n\n`;
-
   entries.forEach((e, i) => {
     const emotionLabel = [...e.emotions, e.customEmotion].filter(Boolean).join('、') || '未命名';
-    text += `【記錄 ${i+1}】${formatDate(e.createdAt)}\n`;
+    text += `【記錄 ${i+1}】${formatDate(e.createdAt)}${e.editCount > 0 ? `（已編輯 ${e.editCount} 次）` : ''}\n`;
     text += `情緒：${emotionLabel}｜強度：${e.intensity}/10\n`;
     if (e.bodyZones.length > 0) text += `身體部位：${e.bodyZones.join('、')}\n`;
     if (e.bodyDesc) text += `身體感受：${e.bodyDesc}\n`;
@@ -631,31 +617,21 @@ function generateExport() {
     if (e.note) text += `備註：${e.note}\n`;
     text += '\n';
   });
-
   document.getElementById('ai-prompt-preview').textContent = text;
   exportGenerated = true;
   window._exportText = text;
 }
 
 function copyExport() {
-  if (!exportGenerated || !window._exportText) {
-    generateExport();
-    setTimeout(copyExport, 300);
-    return;
-  }
+  if (!exportGenerated || !window._exportText) { generateExport(); setTimeout(copyExport, 300); return; }
   navigator.clipboard.writeText(window._exportText).then(() => {
-    const s = document.getElementById('copy-success');
-    s.style.display = 'block';
+    document.getElementById('copy-success').style.display = 'block';
     showToast('✓ 已複製，貼到 AI 即可分析！');
-    setTimeout(() => { s.style.display = 'none'; }, 4000);
+    setTimeout(() => { document.getElementById('copy-success').style.display = 'none'; }, 4000);
   }).catch(() => {
-    // Fallback
     const ta = document.createElement('textarea');
     ta.value = window._exportText;
-    document.body.appendChild(ta);
-    ta.select();
-    document.execCommand('copy');
-    document.body.removeChild(ta);
+    document.body.appendChild(ta); ta.select(); document.execCommand('copy'); document.body.removeChild(ta);
     showToast('✓ 已複製！');
   });
 }
@@ -663,29 +639,29 @@ function copyExport() {
 function confirmClear() {
   if (!confirm('確定清除所有記錄？此操作無法還原。')) return;
   entries = [];
-  save();
-  showToast('已清除所有記錄');
-  renderHistory();
+  save(); showToast('已清除所有記錄'); renderHistory();
 }
 
-// ══════════════════════════════════════════
+// ════════════════════════════════════════
 // UTILS
-// ══════════════════════════════════════════
+// ════════════════════════════════════════
 function formatDate(iso) {
   const d = new Date(iso);
-  return d.toLocaleDateString('zh-TW', { month: 'long', day: 'numeric', hour: '2-digit', minute: '2-digit' });
+  return d.toLocaleDateString('zh-TW', { month:'long', day:'numeric', hour:'2-digit', minute:'2-digit' });
 }
-
+function formatDateFull(iso) {
+  const d = new Date(iso);
+  return d.toLocaleDateString('zh-TW', { year:'numeric', month:'long', day:'numeric', hour:'2-digit', minute:'2-digit', second:'2-digit' });
+}
 function showToast(msg) {
   const t = document.getElementById('toast');
-  t.textContent = msg;
-  t.classList.add('show');
+  t.textContent = msg; t.classList.add('show');
   setTimeout(() => t.classList.remove('show'), 2500);
 }
 
-// ══════════════════════════════════════════
+// ════════════════════════════════════════
 // INIT
-// ══════════════════════════════════════════
+// ════════════════════════════════════════
 initTags();
 </script>
 </body>
